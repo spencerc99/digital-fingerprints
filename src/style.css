@@ -18,7 +18,8 @@
   transition: opacity 1s ease;
 }
 
-#cursor-chat-layer .stale, #cursor-chat-layer .new {
+#cursor-chat-layer .stale,
+#cursor-chat-layer .new {
   visibility: hidden;
 }
 
@@ -26,7 +27,8 @@
   opacity: 0;
 }
 
-#cursor-chat-layer .cursor > p, #cursor-chat-layer #cursor-chat-box {
+#cursor-chat-layer .cursor > p,
+#cursor-chat-layer #cursor-chat-box {
   display: inline-block;
   margin-top: 1em;
   margin-left: 0.5em;
@@ -34,7 +36,7 @@
   position: relative;
   border-radius: 20px;
   border: 2px solid #00000011;
-  box-shadow: 7px 15px 36px 4px rgba(0,0,0,0.1);
+  box-shadow: 7px 15px 36px 4px rgba(0, 0, 0, 0.1);
   max-width: 250px;
   border-top-left-radius: 0;
   font-family: sans-serif;
@@ -56,4 +58,14 @@
 #cursor-chat-layer .chat.show {
   visibility: visible;
   opacity: 1;
+}
+
+#fingerprint {
+  width: 600px;
+  height: 600px;
+  border: 1px solid black;
+}
+
+#canvasContainer {
+  display: block;
 }
