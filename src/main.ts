@@ -87,7 +87,8 @@ class DigitalFingerprintsProvider {
     // Variables draw canvas
     var draggin = false;
     var ctx = canvas.getContext("2d")!;
-    const drawActions: string[] = [];
+    // const drawActions: string[] = [];
+    const drawActions = this.doc.getArray<string>("drawActions");
     let lastDrewActionIdx = -1;
     // Initiating canvas
     ctx.globalCompositeOperation = "color";
@@ -108,29 +109,48 @@ class DigitalFingerprintsProvider {
       }
     }
 
+    drawActions.observe(async (event) => {
+      // print updates when the data changes
+      const actionsToApply = drawActions.toArray().slice(lastDrewActionIdx + 1);
+      console.log("in stack ", lastDrewActionIdx, drawActions.toArray());
+      for (const action of actionsToApply) {
+        console.log("drawing from stack");
+        var canvasPic = new Image();
+        // canvasPic.src = drawActions.pop()!;
+        canvasPic.src = action;
+        await canvasPic.decode();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // ctx.beginPath();
+        // TODO: this is slightly off for some reason, some lossiness.
+        ctx.drawImage(canvasPic, 0, 0);
+        lastDrewActionIdx++;
+      }
+    });
+
     // on array change, update the canvas
     function saveCanvas() {
       // if want to support redo, need to save index and then reset and pop redos when
       // new action.
-      drawActions.push(getCanvas()!.toDataURL());
+      drawActions.push([getCanvas()!.toDataURL()]);
       lastDrewActionIdx++;
     }
 
-    function undo() {
+    async function undo() {
       if (!drawActions.length) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         return;
       }
 
       var canvasPic = new Image();
-      canvasPic.src = drawActions.pop()!;
-      console.log("cleared ", drawActions);
-      canvasPic.onload = function () {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // ctx.beginPath();
-        // TODO: this is slightly off for some reason, some lossiness.
-        ctx.drawImage(canvasPic, 0, 0);
-      };
+      // canvasPic.src = drawActions.pop()!;
+      canvasPic.src = drawActions.get(drawActions.length - 1);
+      drawActions.delete(drawActions.length - 1);
+      // console.log("cleared ", drawActions);
+      await canvasPic.decode();
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // ctx.beginPath();
+      // TODO: this is slightly off for some reason, some lossiness.
+      ctx.drawImage(canvasPic, 0, 0);
     }
 
     function putPoint(e) {
@@ -308,9 +328,9 @@ class DigitalFingerprintsProvider {
     canvas.addEventListener("touchleave", handleEnd, false);
     canvas.addEventListener("touchmove", handleTouchMove, false);
 
-    document.addEventListener("keydown", (event) => {
+    document.addEventListener("keydown", async (event) => {
       if ((event.ctrlKey || event.metaKey) && event.key === "z") {
-        undo();
+        await undo();
         event.preventDefault();
       }
     });
