@@ -12,7 +12,6 @@ interface Cursor {
   y: number;
   chat: string;
   nStale: number;
-  pc: PerfectCursor | undefined;
 }
 
 type ReplicatedCursor = Pick<Cursor, "id" | "color" | "x" | "y" | "chat">;
@@ -22,10 +21,10 @@ class DigitalFingerprintsProvider {
   room_id: string;
   doc: Y.Doc;
   websocketProvider: WebsocketProvider;
-  me: Cursor;
-  others: Map<string, Cursor>;
-  replicated_cursors: Y.Map<ReplicatedCursor>;
-  intervalId: number;
+  // me: Cursor;
+  // others: Map<string, Cursor>;
+  // replicated_cursors: Y.Map<ReplicatedCursor>;
+  // intervalId: number;
   toUpdate: boolean;
   indexeddbProvider: IndexeddbPersistence;
 
@@ -83,7 +82,7 @@ class DigitalFingerprintsProvider {
     ctx.fillStyle = "#1DB8CE";
     ctx.shadowColor = "#1DB8CE";
 
-    function engage(e) {
+    function engage(e: any) {
       draggin = true;
       saveCanvas();
       putPoint(e);
@@ -155,7 +154,7 @@ class DigitalFingerprintsProvider {
     }
 
     // Functions canvas mobile touch
-    function handleStart(evt) {
+    function handleStart(evt: any) {
       var touches = evt.changedTouches;
       for (var i = 0; i < touches.length; i++) {
         if (isValidTouch(touches[i])) {
@@ -228,7 +227,7 @@ class DigitalFingerprintsProvider {
         arr_touches.splice(i, 1);
       }
     }
-    function copyTouch(touch) {
+    function copyTouch(touch: { identifier: any; clientX: any; clientY: any }) {
       return {
         identifier: touch.identifier,
         clientX: touch.clientX,

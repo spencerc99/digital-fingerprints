@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cursor Chat Demo</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    
+    <script type="module" crossorigin src="/assets/index.4c0dcf19.js"></script>
+    <link rel="modulepreload" href="/assets/vendor.5dcfaa42.js">
+    <link rel="stylesheet" href="/assets/index.7336142e.css">
+  </head>
+  <body>
+    <div id="app">
+      <div class="description">
+        <h1>Digital Fingerprints</h1>
+        <p>
+          Digital Fingerprints is an experiment in collaborative symbol-making
+          and the intermittent transmission of collected personal creative
+          histories.
+        </p>
+        <p>
+          Pick your color below and make your own fingerprint. If there are
+          other people here, you'll see their markings appear instantly as they
+          draw.
+        </p>
+        <div class="color-picker">
+          <label for="colorPicker"> <b>COLOR</b> </label>
+          <input type="color" value="#1DB8CE" id="colorPicker" />
+        </div>
+        <!-- <span>RADIUS</span>
+        <input
+          type="range"
+          name="radiusPoint"
+          id="radiusPoint"
+          class="radius__point"
+          min="1"
+          max="20"
+          step="1"
+          value="10"
+        /> -->
+        <!-- <span id="radTextRaduis">10</span>
+        <span>BLUR</span>
+        <input
+          type="range"
+          name="radiusBlur"
+          id="radiusBlur"
+          class="radius__point"
+          min="0"
+          max="20"
+          step="1"
+          value="0"
+        />
+        <span id="radTextBlur">0</span> -->
+      </div>
+      <!-- for reference: https://codepen.io/cartalan/pen/wJRKQP -->
+      <canvas id="fingerprint" width="600" height="600  "></canvas>
+    </div>
+
+    
+  </body>
+</html>
