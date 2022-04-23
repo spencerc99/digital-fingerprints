@@ -54,23 +54,6 @@ class DigitalFingerprintsProvider {
 
     console.log(`connecting to ${this.room_id} with id ${this.self_id}`);
 
-    // array of numbers which produce a sum
-    const yarray = this.doc.getArray<number>("count");
-
-    // observe changes of the sum
-    yarray.observe((event) => {
-      // print updates when the data changes
-      const newSum = yarray.toArray().reduce((a, b) => a + b);
-      console.log("new sum: " + newSum);
-      document.getElementById("testOutput")!.innerText = newSum;
-    });
-
-    document.getElementById("testDiv")!.onchange = () => {
-      const newSum = Number(document.getElementById("testDiv")?.value);
-      console.log(newSum);
-      yarray.push([newSum]);
-    };
-
     function getCanvas(): HTMLCanvasElement {
       return document.getElementById("fingerprint")! as HTMLCanvasElement;
     }
@@ -79,6 +62,8 @@ class DigitalFingerprintsProvider {
 
     var radiusBlur = document.getElementById("radiusBlur");
     var radTextBlur = document.getElementById("radTextBlur");
+    var radiusPoint = document.getElementById("radiusPoint");
+    var radTextPoint = document.getElementById("radTextPoint");
     // Variable for touch mobile
     var arr_touches: number[] = [];
     // Default radio brush and blur
@@ -292,11 +277,14 @@ class DigitalFingerprintsProvider {
     var setRadiusBlur = function (newBlur) {
       ctx.shadowBlur = newBlur;
     };
+    var setRadiusPoint = function (newRadiusPoint) {
+      ctx.lineWidth = newRadiusPoint * 2;
+    };
     // Handling events listeners
-    // radiusPoint.addEventListener("input", function () {
-    //   radTextRaduis.innerHTML = radiusPoint.value;
-    //   setRadiusPoint(this.value);
-    // });
+    radiusPoint.addEventListener("input", function () {
+      radTextPoint.innerHTML = radiusPoint.value;
+      setRadiusPoint(this.value);
+    });
     radiusBlur.addEventListener("input", function () {
       radTextBlur.innerHTML = radiusBlur.value;
       setRadiusBlur(this.value);

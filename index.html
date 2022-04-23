@@ -12,20 +12,23 @@
   </head>
   <body>
     <div id="app">
-      <h1>Digital Fingerprints</h1>
-      <p>digital fingerprints by Spencer Chang</p>
-      <input id="testDiv" />
-      <div id="testOutput"></div>
-
-      <br />
-      <br />
-      <span class="color-picker">
-        <label for="colorPicker">
+      <div class="description">
+        <h1>Digital Fingerprints</h1>
+        <p>
+          Digital Fingerprints is an experiment in collaborative symbol-making
+          and the intermittent transmission of collected personal creative
+          histories.
+        </p>
+        <p>
+          Pick your color below and make your own fingerprint. If there are
+          other people here, you'll see their markings appear instantly as they
+          draw.
+        </p>
+        <div class="color-picker">
+          <label for="colorPicker"> <b>COLOR</b> </label>
           <input type="color" value="#1DB8CE" id="colorPicker" />
-        </label>
-      </span>
-      <div id="radiusTool" class="radius__tool">
-        <span>RADIUS</span>
+        </div>
+        <!-- <span>RADIUS</span>
         <input
           type="range"
           name="radiusPoint"
@@ -35,8 +38,8 @@
           max="20"
           step="1"
           value="10"
-        />
-        <span id="radTextRaduis">10</span>
+        /> -->
+        <!-- <span id="radTextRaduis">10</span>
         <span>BLUR</span>
         <input
           type="range"
@@ -48,7 +51,7 @@
           step="1"
           value="0"
         />
-        <span id="radTextBlur">0</span>
+        <span id="radTextBlur">0</span> -->
       </div>
       <!-- for reference: https://codepen.io/cartalan/pen/wJRKQP -->
       <canvas id="fingerprint" width="600" height="600  "></canvas>
@@ -56,17 +59,4 @@
 
     <script type="module" src="./src/main.ts"></script>
   </body>
-  <style>
-    #app {
-      font-family: Inter, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      position: absolute;
-      left: 0;
-      right: 0;
-      margin: 35vh auto;
-      height: 30vh;
-      width: 30vw;
-    }
-  </style>
 </html>
