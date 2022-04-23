@@ -78,29 +78,38 @@ class DigitalFingerprintsProvider {
     ctx.globalCompositeOperation = "color";
     ctx.lineWidth = radius * 2;
     ctx.shadowBlur = blur;
-    ctx.strokeStyle = "#1DB8CE";
-    ctx.fillStyle = "#1DB8CE";
-    ctx.shadowColor = "#1DB8CE";
+    const randColor = randomcolor();
+    ctx.strokeStyle = randColor;
+    ctx.fillStyle = randColor;
+    ctx.shadowColor = randColor;
+    const colorPicker: HTMLInputElement = document.getElementById(
+      "colorPicker"
+    )! as HTMLInputElement;
+    colorPicker.value = randColor;
 
     function engage(e: any) {
       draggin = true;
-      saveCanvas();
       putPoint(e);
     }
     function disengage() {
       if (draggin) {
         draggin = false;
+        saveCanvas();
       }
     }
 
     drawActions.observe(async (event) => {
+      // if (!drawActions.toArray().length) {
+      //   return;
+      // }
+      // drawActions.delete(drawActions.toArray().length - 1);
+      // return;
       // print updates when the data changes
       const actionsToApply = drawActions.toArray().slice(lastDrewActionIdx + 1);
       console.log("in stack ", lastDrewActionIdx, drawActions.toArray());
       for (const action of actionsToApply) {
         console.log("drawing from stack");
         var canvasPic = new Image();
-        // canvasPic.src = drawActions.pop()!;
         canvasPic.src = action;
         await canvasPic.decode();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -138,9 +147,8 @@ class DigitalFingerprintsProvider {
     }
 
     function putPoint(e) {
-      var offset = findPos(canvas);
       if (draggin) {
-        // TODO: fix this to be wherever the canvas is, offset by current location
+        const offset = findPos(canvas);
         const offsetX = e.clientX - offset.x;
         const offsetY = e.clientY - offset.y;
         ctx.beginPath();
@@ -298,9 +306,7 @@ class DigitalFingerprintsProvider {
       var selectColor = e.target;
       changeColor(selectColor.value);
     };
-    document
-      .getElementById("colorPicker")!
-      .addEventListener("change", selectColors);
+    colorPicker.addEventListener("change", selectColors);
 
     // saveCanvas.addEventListener("click", saveImage);
     // clearCanvas.addEventListener("click", clearImage);
