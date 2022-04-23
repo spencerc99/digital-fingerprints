@@ -280,11 +280,11 @@ class DigitalFingerprintsProvider {
       ctx.lineWidth = newRadiusPoint * 2;
     };
     // Handling events listeners
-    radiusPoint.addEventListener("input", function () {
+    radiusPoint?.addEventListener("input", function () {
       radTextPoint.innerHTML = radiusPoint.value;
       setRadiusPoint(this.value);
     });
-    radiusBlur.addEventListener("input", function () {
+    radiusBlur?.addEventListener("input", function () {
       radTextBlur.innerHTML = radiusBlur.value;
       setRadiusBlur(this.value);
     });
@@ -449,59 +449,6 @@ class DigitalFingerprintsProvider {
   clearLocalHistory() {
     this.indexeddbProvider.clearData();
   }
-}
-
-function initializeCursor(c: ReplicatedCursor, div: HTMLElement): Cursor {
-  const htmlFragment = `<div id="cursor_${c.id}" class="cursor">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 35 35"
-      fill="none"
-      fillRule="evenodd"
-    >
-      <g fill="rgba(0,0,0,.2)" transform="translate(1,1)">
-        <path d="m12 24.4219v-16.015l11.591 11.619h-6.781l-.411.124z" />
-        <path d="m21.0845 25.0962-3.605 1.535-4.682-11.089 3.686-1.553z" />
-      </g>
-      <g fill="white">
-        <path d="m12 24.4219v-16.015l11.591 11.619h-6.781l-.411.124z" />
-        <path d="m21.0845 25.0962-3.605 1.535-4.682-11.089 3.686-1.553z" />
-      </g>
-      <g fill="${c.color}">
-        <path d="m19.751 24.4155-1.844.774-3.1-7.374 1.841-.775z" />
-        <path d="m13 10.814v11.188l2.969-2.866.428-.139h4.768z" />
-      </g>
-    </svg>
-    <p id="chat_${c.id}" class="chat" style="background-color: ${c.color}"></p>
-  </div>`;
-
-  const template = document.createElement("template");
-  template.innerHTML = htmlFragment;
-  const cursorEl = template.content.firstChild as HTMLElement;
-  cursorEl.classList.add("new");
-  div.appendChild(cursorEl);
-
-  const chatEl = getChatElement(c) as HTMLElement;
-  chatEl.innerText = c.chat;
-
-  function addPoint(point: number[]) {
-    const [x, y] = point;
-    cursorEl.style.setProperty("transform", `translate(${x}px, ${y}px)`);
-  }
-
-  return {
-    ...c,
-    pc: new PerfectCursor(addPoint),
-    nStale: 0,
-  };
-}
-
-function getCursorElement(c: Cursor | ReplicatedCursor) {
-  return document.getElementById(`cursor_${c.id}`);
-}
-
-function getChatElement(c: Cursor | ReplicatedCursor) {
-  return document.getElementById(`chat_${c.id}`);
 }
 
 new DigitalFingerprintsProvider();
